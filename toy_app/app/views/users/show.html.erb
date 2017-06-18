@@ -10,5 +10,14 @@
   <%= @user.email %>
 </p>
 
+
+<!-- https://stackoverflow.com/questions/39317466/ruby-on-rails-tutorial-michael-hartl-chapter-2-exercise-2-3-3-1-edit-the-user -->
+<% if @micropost %> 
+  <p>
+    <strong>Content:</strong>
+    <%= @micropost.content %>
+  </p>
+<% end %>
+
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
