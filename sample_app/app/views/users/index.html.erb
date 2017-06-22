@@ -1,0 +1,12 @@
+<% provide(:title, 'All users') %>
+<h1>All users</h1>
+
+<%= will_paginate %>
+
+<ul class="users">
+  <!--- Here Rails infers that @users is a list of User objects; moreover, when called with a collection of users, Rails automatically iterates through them and renders each one with the _user.html.erb partial (inferring the name of the partial from the name of the class) -->
+  <!-- https://www.railstutorial.org/book/updating_and_deleting_users#sec-requiring_logged_in_users -->
+  <%= render @users %>
+</ul>
+
+<%= will_paginate %>
