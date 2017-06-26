@@ -77,3 +77,6 @@ to insert the title into the template using Ruby’s yield function.
 >> "#{first_name} #{last_name}"    # The equivalent interpolation
 => "Michael Hartl"
 ```
+
+Further practice:
+http://railsforzombies.org/
