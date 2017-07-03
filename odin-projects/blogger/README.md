@@ -64,3 +64,34 @@ For example, `article_path(1)` would generate the string `"/articles/1"`.
 #### Creating the SHOW action
 
 Within the controller, we have access to a method named `params` which returns us a hash of the request parameters. Within that hash we can find the `:id` from the URL by accessing the key `params[:id]`.
+
+# Form-based workflow
+
+* `form_for` is a Rails helper method which takes one parameter, in this case @article and a block with the form fields.
+* The `f.label` helper creates an HTML label for a field. This is good usability practice and will have some other benefits for us later
+* The `f.text_field` helper creates a single-line text box named title
+* The `f.text_area` helper creates a multi-line text box named body
+* The `f.submit` helper creates a button labeled "Create"
+
+`params[:article][:body])`
+First article accessed then we got body because og the Hash received in our response. To check hash received we set method definition to `fail`.
+
+**Reflection: Rails thingy**
+
+For security reasons, it’s not a good idea to blindly save parameters sent into us via the params hash. Luckily, Rails gives us a feature to deal with this situation: Strong Parameters.
+
+It works like this: You use two new methods, `require` and `permit`. They help you declare which attributes you’d like to accept. Also helper methods can be used to implement them. You need to add `include ArticlesHelper` in your class to use helper methods.
+
+## Deleting Articles
+
+```ruby
+<%= link_to "delete", article_path(article), method: :delete %>
+```
+
+HTML forms only support GET and POST. So Rails’ solution to this problem is to fake a DELETE verb.
+
+Find the element we want to delete using params[:id] and then destroy on the object.
+
+## Editing Articles
+
+Introduction to partials as CREATE and EDIT both have the same form. EDIT also needs ann UPDATE action. 
