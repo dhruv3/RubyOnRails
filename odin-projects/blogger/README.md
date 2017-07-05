@@ -68,7 +68,10 @@ Within the controller, we have access to a method named `params` which returns u
 # Form-based workflow
 
 * `form_for` is a Rails helper method which takes one parameter, in this case @article and a block with the form fields.
-* The `f.label` helper creates an HTML label for a field. This is good usability practice and will have some other benefits for us later
+* The `f.label` helper creates an HTML label for a field. This is good usability practice and will have some other benefits for us later. Example is as follows:
+```ruby
+<%= f.label :author_name, "Your Name"  %>
+```
 * The `f.text_field` helper creates a single-line text box named title
 * The `f.text_area` helper creates a multi-line text box named body
 * The `f.submit` helper creates a button labeled "Create"
@@ -95,3 +98,49 @@ Find the element we want to delete using params[:id] and then destroy on the obj
 ## Editing Articles
 
 Introduction to partials as CREATE and EDIT both have the same form. EDIT also needs ann UPDATE action. 
+
+## Adding a flash
+
+The controller provides you with accessors to interact with the flash.
+```html
+<p class="flash"><%= flash.notice %></p>
+```
+
+This outputs the value stored in the `flash` object in the attribute `:notice`.
+
+# Adding Comments
+
+## Comment Model
+
+```ruby
+bin/rails generate model Comment author_name:string body:text article:references
+```
+
+The Rails convention for a one-to-many relationship:
+
+* the objects on the "many" end should have a foreign key referencing the "one" object.
+* that foreign key should be titled with the name of the "one" object, then an underscore, then "id".
+
+In this case one article has many comments, so each comment has a field named `article_id`.
+
+Use `a.reload` to force console to clear the cache and lookup the accurate information.
+
+### Displaying Comments
+```ruby
+<%= render partial: 'articles/comment', collection: @article.comments %>
+```
+This render line will pass each element of `article.comments` array one at a time into the partial named "comment".
+
+### Web based comment creation
+
+Creating a sub-resource:
+```ruby
+resources :articles do
+  resources :comments
+end
+```
+After creation of comment we need to redirect the page back to our submitted comment. We do this as-
+```ruby
+redirect_to article_path(@comment.article)
+```
+Recall that `article_path` needs to know which article we want to see. We might not have an `@article` object in this controller action, but we can find the Article associated with this Comment by calling `@comment.article`.
