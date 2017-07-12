@@ -144,3 +144,32 @@ After creation of comment we need to redirect the page back to our submitted com
 redirect_to article_path(@comment.article)
 ```
 Recall that `article_path` needs to know which article we want to see. We might not have an `@article` object in this controller action, but we can find the Article associated with this Comment by calling `@comment.article`.
+
+Many-to-many relationships are tricky because we’re using an SQL database.
+
+The relationships will setup like this:
+* An Article has_many Taggings
+* A Tag has_many Taggings
+* A Tagging belongs_to an Article and belongs_to a Tag
+
+n Rails we can express this "has many" relationship through an existing "has many" relationship.
+has_many :tags, through: :taggings
+AND
+has_many :articles, through: :taggings
+We can now just query article.tags or tag.articles to get our answers.
+
+We need a method tag_list in model so as to get the tag list.
+
+def tag_list
+  self.tags.collect do |tag|
+    tag.name
+  end.join(", ")
+end
+
+We could fix the tag_list method by:
+* Converting all our tag objects to an array of tag names
+* Joining the array of tag names together
+
+
+tag_names = tags_string.split(",").collect{|s| s.strip.downcase}.uniq
+
