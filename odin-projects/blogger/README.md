@@ -145,7 +145,7 @@ redirect_to article_path(@comment.article)
 ```
 Recall that `article_path` needs to know which article we want to see. We might not have an `@article` object in this controller action, but we can find the Article associated with this Comment by calling `@comment.article`.
 
-#Tagging
+# Tagging
 
 Many-to-many relationships are tricky because we’re using an SQL database.
 
@@ -165,17 +165,39 @@ has_many :articles, through: :taggings
 We can now just query article.tags or tag.articles to get our answers.
 
 We need a method tag_list in model so as to get the tag list.
-
+```ruby
 def tag_list
   self.tags.collect do |tag|
     tag.name
   end.join(", ")
 end
+```
 
 We could fix the tag_list method by:
 * Converting all our tag objects to an array of tag names
 * Joining the array of tag names together
 
-
+```ruby
 tag_names = tags_string.split(",").collect{|s| s.strip.downcase}.uniq
+```
 
+# A few gems
+
+## Setting up Database
+Any time we want to make a change to the database we’ll need a migration.
+```ruby
+def change
+ add_column :articles, :image_file_name,    :string
+ add_column :articles, :image_content_type, :string
+ add_column :articles, :image_file_size,    :integer
+ add_column :articles, :image_updated_at,   :datetime
+end
+add_column(table_name, column_name, type, options = {}) 
+```
+Adds a new column to the named table.
+
+### Modifying the Form Template
+```ruby
+<%= form_for(@article, html: {multipart: true}) do |f| %>
+```
+This is an instruction to the browser about how to submit the form.
