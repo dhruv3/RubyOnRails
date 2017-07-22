@@ -201,3 +201,8 @@ Adds a new column to the named table.
 <%= form_for(@article, html: {multipart: true}) do |f| %>
 ```
 This is an instruction to the browser about how to submit the form.
+
+# Authentication
+
+Rails has two scaffold generators: scaffold and scaffold_controller. The scaffold generator generates the model, controller and views. The scaffold_controller will generate the controller and views.
+
