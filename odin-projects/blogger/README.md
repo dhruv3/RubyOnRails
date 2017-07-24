@@ -206,3 +206,11 @@ This is an instruction to the browser about how to submit the form.
 
 Rails has two scaffold generators: scaffold and scaffold_controller. The scaffold generator generates the model, controller and views. The scaffold_controller will generate the controller and views.
 
+### HTML Verbs
+
+These request verbs are:
+
+* GET: fetch an existing resource. The URL contains all the necessary information the server needs to locate and return the resource.
+* POST: create a new resource. POST requests usually carry a payload that specifies the data for the new resource.
+* PUT: update an existing resource. The payload may contain the updated data for the resource.
+* DELETE: delete an existing resource.
