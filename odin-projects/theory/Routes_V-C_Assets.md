@@ -36,3 +36,9 @@ Basically, you *require* the name of your array or hash to be in Params (otherwi
 
 A redirect submits a completely new HTTP request, effectively leaving our application in the dust and starting over from the top. We lose all our data... except for the flash. The flash is specifically designed to travel with that HTTP request so you have access to it when you get redirected to the next page.
 
+# Views
+
+Put anything that's needed across all your webpages into the layout. The view template at *app/views/posts/index.html.erb* gets inserted where the *yield* statement is.
+
+
+
